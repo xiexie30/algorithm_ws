@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import sys
 import os
-yoloPath = '/home/nvidia/xjb/algorithm_ws/src/yolov8/'
+# yoloPath = '/home/nvidia/xjb/algorithm_ws/src/yolov8/'
+yoloPath = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(yoloPath) 
 from ultralytics import YOLO
 import rospy
@@ -13,7 +14,7 @@ from yolov8.msg import keypoint, pose
 import threading
 
 # Load a model
-model = YOLO('/home/nvidia/xjb/ultralytics-main/weights/yolov8n-pose.pt')  # load an official model
+model = YOLO(yoloPath + '/weights/yolov8n-pose.pt')  # load an official model
 img = None
 
 def callback(imgmsg):
@@ -39,6 +40,8 @@ def pose_detect():
             # print(result.keypoints)
             pose_result.shape = result.orig_shape
             for kp in result.keypoints:
+                if kp.conf is None:
+                    continue
                 # print(result.boxes.xyxyn.tolist())
                 keypoint_msg = keypoint()
                 xyn = kp.xyn.cpu().numpy()[0]

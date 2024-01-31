@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import sys
 import os
-yoloPath = '/home/nvidia/xjb/algorithm_ws/src/yolov8/'
+# yoloPath = '/home/nvidia/xjb/algorithm_ws/src/yolov8/'
+yoloPath = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(yoloPath) 
 from ultralytics import YOLO
 import rospy
@@ -14,7 +15,7 @@ from yolov8.msg import Box
 import threading
 
 # Load a model
-model = YOLO('/home/nvidia/xjb/ultralytics-main/weights/yolov8m.pt')  # load an official model
+model = YOLO(yoloPath + '/weights/yolov8m.pt')  # load an official model
 img = None
 
 def callback(imgmsg):

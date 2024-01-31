@@ -55,6 +55,8 @@ add_message_files(
   yolo.msg
   keypoint.msg
   pose.msg
+  ActionBox.msg
+  yoloAction.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -166,6 +168,7 @@ include_directories(
 catkin_install_python(PROGRAMS
   scripts/detect.py
   scripts/pose.py
+  scripts/detect_action.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
